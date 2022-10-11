@@ -1,0 +1,66 @@
+.centerForm{
+    margin: auto;
+    width: 600px;
+    padding: 15px;
+    background-color: azure;
+}
+
+.centerList{
+    margin: 0 auto;
+    min-width: 600px;
+    width: 50%;
+    padding: 15px;
+    background-color: azure;
+}
+
+table {
+    font-size: medium;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+thead{
+    background-color: gainsboro;
+}
+
+tbody>tr{
+    transition: 0.5s;
+
+}
+
+tbody>tr:hover{
+    cursor: pointer;
+    background-color: aliceblue;
+    scale: 1.05;
+}
+
+.windowFlex{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+html, body {
+    height: 100%;
+    letter-spacing: normal;
+}
+
+.background{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -5;
+    background-image: url("/res/books-background.webp");
+    background-repeat: repeat;
+    background-size: 600px 600px;
+    opacity: 0.5;
+    animation: moveIt 250s linear infinite;
+}
+
+@keyframes moveIt {
+    from {background-position: bottom left;}
+    to {background-position: top right;}
+  }
+
+#add{
+    margin-bottom: 15px;
+}
