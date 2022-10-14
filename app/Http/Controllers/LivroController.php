@@ -13,12 +13,21 @@ class LivroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $livros = Livro::all();
-        return view('livros.index',array('livros' => $livros));
-    }
+        if ($request->input("busca") != null){ //.$request->input('busca').
+            $busca = $request->input("busca");
 
+            $livros = Livro::where('titulo','like','%'. $busca.'%')
+            ->orwhere('ano','like','%'. $busca.'%')->get();
+            return view('livros.index',array('livros' => $livros,'busca'=>$busca));     
+        }
+        else {
+
+            $livros = Livro::all();
+            return view('livros.index',array('livros' => $livros,'busca'=>null));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -106,4 +115,7 @@ class LivroController extends Controller
         Session::flash('mensagem','Livro Excluído com Sucesso');
         return redirect(url('livros/'));
     }
+
+
+
 }
