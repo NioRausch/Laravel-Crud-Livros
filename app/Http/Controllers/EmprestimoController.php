@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emprestimo;
 use Illuminate\Http\Request;
 
-class EmprestimoController extends Controller
+class EmprestimosController extends Controller
 {
     /**
      * Display a listing of the resource.

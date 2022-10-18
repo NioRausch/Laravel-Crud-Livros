@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContatosController;
+use App\Http\Controllers\EmprestimosController;
 use App\Http\Controllers\LivroController;
 
 /*
@@ -15,6 +16,7 @@ use App\Http\Controllers\LivroController;
 |
 */
 Route::resource('contatos', ContatosController::class);
+Route::resource('emprestimos', EmprestimosController::class);
 
 Route::resource('livros', LivroController::class);
 
