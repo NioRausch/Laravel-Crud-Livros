@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContatosController;
 use App\Http\Controllers\LivroController;
 
 /*
@@ -13,5 +14,7 @@ use App\Http\Controllers\LivroController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('contatos', ContatosController::class);
 
 Route::resource('livros', LivroController::class);
+
