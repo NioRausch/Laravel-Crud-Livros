@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contato;
 use App\Models\Emprestimo;
+use App\Models\Livro;
 use Illuminate\Http\Request;
+use Session;
 
 class EmprestimosController extends Controller
 {
@@ -14,8 +17,21 @@ class EmprestimosController extends Controller
      */
     public function index()
     {
-        //
+        $emprestimos = Emprestimo::simplepaginate(5);
+        return view('emprestimo.index',array('emprestimos' => $emprestimos,'busca'=>null));
+
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function buscar(Request $request) {
+        $emprestimos = Emprestimo::where('contato_id','=',$request->input('busca'))->orwhere('livro_id','=',$request->input('busca'))->orwhere('obs','LIKE','%'.$request->input('busca').'%')->simplepaginate(5);
+        return view('emprestimo.index',array('emprestimos' => $emprestimos,'busca'=>$request->input('busca')));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -23,8 +39,10 @@ class EmprestimosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        $contatos = Contato::all();
+        $livros = Livro::all();
+        return view('emprestimo.create', ['contatos'=> $contatos, 'livros'=>$livros]);
     }
 
     /**
@@ -35,7 +53,21 @@ class EmprestimosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'contato_id' => 'required',
+            'livro_id' => 'required',
+            'datahora' => 'required'
+        ]);
+        $emprestimo = new Emprestimo();
+        $emprestimo->contato_id = $request->input('contato_id');
+        $emprestimo->livro_id = $request->input('livro_id');
+        $emprestimo->datahora = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', $request->input('datahora'));
+        $emprestimo->obs = $request->input('obs');
+        $emprestimo->datadevolucao = null;
+
+        if($emprestimo->save()) {
+            return redirect('emprestimos');
+        }
     }
 
     /**

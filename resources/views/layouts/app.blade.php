@@ -23,6 +23,21 @@
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/contatos">Contatos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/livros">Livros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/emprestimos">Emprestimos</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     <div class="background"></div>
     @yield("content")
 </body>
