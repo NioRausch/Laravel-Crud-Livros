@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout.app')
 @section('title','Empréstimos')
 @section('content')
     <h1>Empréstimos</h1>
@@ -15,7 +15,7 @@
             <div class="col-sm-9">
                 <div class="input-group ml-5">
                     @if($busca !== null)
-                        &nbsp;<a class="btn btn-info" href="{{url('livros/')}}">Todos</a>&nbsp;
+                        &nbsp;<a class="btn btn-info" href="{{url('emprestimos/')}}">Todos</a>&nbsp;
                     @endif
                     {{Form::text('busca',$busca,['class'=>'form-control','required','placeholder'=>'buscar'])}}
                     &nbsp;
@@ -27,23 +27,27 @@
         </div>
     {{Form::close()}}
     <br />
-    <table class="table table-striped">
-        @foreach ($emprestimos as $emprestimo)
+    <table class="table table-striped table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Contato</th>
+        <th>Livro</th>
+        <th>Data</th>
+        <th>Devolução</th>
+    </tr>
+    @foreach ($emprestimos as $emprestimo)
             <tr>
                 <td>
                     <a href="{{url('emprestimos/'.$emprestimo->id)}}">{{$emprestimo->id}}</a>
                 </td>
                 <td>
-                    {{$emprestimo->contato_id}} -
-                    {{$emprestimo->contato()->nome}}
+                    {{$emprestimo->contato_id}} - {{$emprestimo->contato->nome}}
                 </td>
                 <td>
-                    {{$emprestimo->livro_id}}
-                    {{$emprestimo->livro()->nome}}
-
+                    {{$emprestimo->livro_id}} - {{$emprestimo->livro->titulo}}
                 </td>
                 <td>
-                    {{$emprestimo->datahora}}
+                    {{\Carbon\Carbon::create($emprestimo->datahora)->format('d/m/Y H:i:s')}}
                 </td>
             </tr>
         @endforeach
