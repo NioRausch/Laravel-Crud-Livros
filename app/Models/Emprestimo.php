@@ -12,10 +12,10 @@ class Emprestimo extends Model
     use HasFactory;
 
     public function contato(){
-        return this->belongsTo(Contato::class);
+        return $this->belongsTo(Contato::class);
     }
 
     public function livro(){
-        return this->hasOne(livro::class);
+        return $this->hasOne(livro::class);
     }
 }

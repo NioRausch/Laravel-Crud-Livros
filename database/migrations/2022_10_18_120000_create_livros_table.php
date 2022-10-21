@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('descricao');
             $table->string('autor',200);
             $table->string('editora', 100);
-            $table->bigInteger('ano');
+            $table->integer('ano');
             $table->timestamps();
         });
     }

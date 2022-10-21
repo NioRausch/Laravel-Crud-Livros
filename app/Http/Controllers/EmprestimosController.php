@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contato;
 use App\Models\Emprestimo;
+use App\Models\Contato;
 use App\Models\Livro;
 use Illuminate\Http\Request;
 use Session;
@@ -19,7 +19,6 @@ class EmprestimosController extends Controller
     {
         $emprestimos = Emprestimo::simplepaginate(5);
         return view('emprestimo.index',array('emprestimos' => $emprestimos,'busca'=>null));
-
     }
 
     /**
@@ -28,7 +27,7 @@ class EmprestimosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function buscar(Request $request) {
-        $emprestimos = Emprestimo::where('contato_id','=',$request->input('busca'))->orwhere('livro_id','=',$request->input('busca'))->orwhere('obs','LIKE','%'.$request->input('busca').'%')->simplepaginate(5);
+        $emprestimos = Emprestimo::with('contato')->with('livro')->where('contato_id','=',$request->input('busca'))->orwhere('livro_id','=',$request->input('busca'))->orwhere('obs','LIKE','%'.$request->input('busca').'%')->simplepaginate(5);
         return view('emprestimo.index',array('emprestimos' => $emprestimos,'busca'=>$request->input('busca')));
     }
 
@@ -39,10 +38,10 @@ class EmprestimosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $contatos = Contato::all();
         $livros = Livro::all();
-        return view('emprestimo.create', ['contatos'=> $contatos, 'livros'=>$livros]);
+        return view('emprestimo.create',['contatos'=>$contatos,'livros'=>$livros]);
     }
 
     /**
@@ -73,12 +72,13 @@ class EmprestimosController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param int $id
      * @param  \App\Models\Emprestimo  $emprestimo
-     * @return \Illuminate\Http\Response
      */
-    public function show(Emprestimo $emprestimo)
+    public function show($id)
     {
-        //
+        $emprestimo = Emprestimo::find($id);
+        return view('emprestimo.show',array('emprestimo' => $emprestimo,'busca'=>null));
     }
 
     /**
@@ -106,12 +106,16 @@ class EmprestimosController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Emprestimo  $emprestimo
+     * @param \Illuminate\Http\Request $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Emprestimo $emprestimo)
+    public function destroy(Request $request, $id)
     {
-        //
+        $emprestimo = Emprestimo::find($id);
+
+        $emprestimo->delete();
+        Session::flash('mensagem','Empréstimo Excluído com Sucesso');
+        return redirect(url('emprestimos/'));
     }
 }
