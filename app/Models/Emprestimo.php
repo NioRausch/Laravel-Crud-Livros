@@ -11,11 +11,18 @@ class Emprestimo extends Model
 {
     use HasFactory;
 
+        /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'emprestimos';
+
     public function contato(){
         return $this->belongsTo(Contato::class);
     }
 
     public function livro(){
-        return $this->hasOne(livro::class);
+        return $this->belongsTo(Livro::class);
     }
 }

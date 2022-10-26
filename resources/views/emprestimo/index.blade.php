@@ -30,29 +30,41 @@
             {{Form::close()}}
             <br />
             <table class="table table-striped table-hover">
-            <tr>
-                <th>Id</th>
-                <th>Contato</th>
-                <th>Livro</th>
-                <th>Data</th>
-                <th>Devolução</th>
-            </tr>
-            @foreach ($emprestimos as $emprestimo)
+                <thead>
                     <tr>
-                        <td>
-                            <a href="{{url('emprestimos/'.$emprestimo->id)}}">{{$emprestimo->id}}</a>
-                        </td>
-                        <td>
-                            {{$emprestimo->contato_id}} - {{$emprestimo->contato->nome}}
-                        </td>
-                        <td>
-                            {{$emprestimo->livro_id}} - {{$emprestimo->livro->titulo}}
-                        </td>
-                        <td>
-                            {{\Carbon\Carbon::create($emprestimo->datahora)->format('d/m/Y H:i:s')}}
-                        </td>
+                        <th>Id</th>
+                        <th>Contato</th>
+                        <th>Livro</th>
+                        <th>Data</th>
+                        <th>Devolução</th>
                     </tr>
-                @endforeach
+                </thead>
+                <tbody>
+                    @foreach ($emprestimos as $emprestimo)
+                            <tr  id="{{$emprestimo->id}}">
+                                <td>
+                                    {{$emprestimo->id}}
+                                </td>
+                                <td>
+                                    {{$emprestimo->contato_id}} - {{$emprestimo->contato->nome}}
+                                </td>
+                                <td>
+                                    {{$emprestimo->livro_id}} - {{$emprestimo->livro->titulo}}
+                                </td>
+                                <td>
+                                    {{\Carbon\Carbon::create($emprestimo->datahora)->format('d/m/Y H:i:s')}}
+                                </td>
+                            </tr>
+
+                            <script>
+                                var id = {{$emprestimo->id}};
+    
+                                $("#" + id).click(function(){
+                                    location.href= "emprestimos/" + id
+                                })
+                            </script>
+                        @endforeach
+                </tbody>
             </table>
             {{ $emprestimos->links() }}
         </div>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="windowFlex">
         <div class="centerForm border">
-            <div class="card w-50">
+            <div class="card w">
                 <div class="card-header">
                     <h1>Empréstimo - {{$emprestimo->id}}</h1>
                 </div>
